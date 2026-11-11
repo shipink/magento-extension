@@ -1,0 +1,12 @@
+{
+    "require-dev": {
+        "phpunit/phpunit": "^10.5",
+        "magento/magento-coding-standard": "^35"
+    },
+    "autoload-dev": {
+        "psr-4": {"Shipink\\Shipink\\": "../"}
+    },
+    "config": {
+        "allow-plugins": {"dealerdirect/phpcodesniffer-composer-installer": true}
+    }
+}
