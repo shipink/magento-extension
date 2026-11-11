@@ -24,4 +24,9 @@
             <argument name="logger" xsi:type="object">Shipink\Shipink\Logger</argument>
         </arguments>
     </type>
+    <type name="Shipink\Shipink\Observer\AdminOrderAddressUpdate">
+        <arguments>
+            <argument name="logger" xsi:type="object">Shipink\Shipink\Logger</argument>
+        </arguments>
+    </type>
 </config>
