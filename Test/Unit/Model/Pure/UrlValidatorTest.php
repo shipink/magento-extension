@@ -25,6 +25,13 @@ class UrlValidatorTest extends TestCase
             ['https://user@app.shipink.io/x', false],
             ['javascript:alert(1)', false],
             ['', false],
+            ['https://app.shipink.io:8443/x', false],
+            ['https://app.shipink.io:443/x', true],
+            ['https://app.shipink.io/x#frag', false],
+            ['https://APP.SHIPINK.IO/x', true],
+            ['https://app.shipink.io./x', false],
+            ['HTTPS://app.shipink.io/x', false],
+            ['https://evil.com\@app.shipink.io/x', false],
         ];
     }
 }

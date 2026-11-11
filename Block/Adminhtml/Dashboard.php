@@ -31,6 +31,11 @@ class Dashboard extends Template
         return $this->config->getConnectedAt();
     }
 
+    public function canConnect(): bool
+    {
+        return (bool)$this->_authorization->isAllowed('Shipink_Shipink::connect');
+    }
+
     public function getConnectUrl(): string
     {
         $base = rtrim((string)$this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_WEB, true), '/');

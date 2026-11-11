@@ -5,7 +5,9 @@ namespace Shipink\Shipink\Controller\Adminhtml\Connect;
 
 use Magento\Backend\App\Action;
 use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Result\PageFactory;
+use Magento\Store\Model\StoreManagerInterface;
 use Shipink\Shipink\Model\Pure\UrlValidator;
 
 /**
@@ -23,7 +25,8 @@ class Index extends Action implements HttpGetActionInterface
     public function __construct(
         Action\Context $context,
         private readonly PageFactory $pageFactory,
-        private readonly UrlValidator $urlValidator
+        private readonly UrlValidator $urlValidator,
+        private readonly StoreManagerInterface $storeManager
     ) {
         parent::__construct($context);
     }
@@ -45,7 +48,13 @@ class Index extends Action implements HttpGetActionInterface
         $page->setActiveMenu('Shipink_Shipink::shipink');
         $page->getConfig()->getTitle()->prepend(__('Connect to Shipink'));
         $block = $page->getLayout()->getBlock('shipink.connect');
-        $block->setData('state', $state)->setData('callback_url', $callback)->setData('return_url', $return);
+        if (!$block) {
+            $this->messageManager->addErrorMessage(__('Invalid Shipink connect request.'));
+            return $this->resultRedirectFactory->create()->setPath('shipink/dashboard/index');
+        }
+        $storeUrl = rtrim((string)$this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_WEB, true), '/');
+        $block->setData('state', $state)->setData('callback_url', $callback)->setData('return_url', $return)
+            ->setData('store_url', $storeUrl);
         return $page;
     }
 }

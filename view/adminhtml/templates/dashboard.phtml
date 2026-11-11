@@ -8,10 +8,16 @@
         <p>
             <a class="action-primary" target="_blank" rel="noopener noreferrer"
                href="<?= $escaper->escapeUrl($block->getDashboardUrl()) ?>"><?= $escaper->escapeHtml(__('Open Shipink dashboard')) ?></a>
-            <a class="action-secondary" href="<?= $escaper->escapeUrl($block->getConnectUrl()) ?>"><?= $escaper->escapeHtml(__('Reconnect')) ?></a>
+            <?php if ($block->canConnect()): ?>
+                <a class="action-secondary" href="<?= $escaper->escapeUrl($block->getConnectUrl()) ?>">
+                    <?= $escaper->escapeHtml(__('Reconnect')) ?></a>
+            <?php endif; ?>
         </p>
     <?php else: ?>
         <p><?= $escaper->escapeHtml(__('Connect this store to Shipink to sync orders and print labels with discounted carrier rates.')) ?></p>
-        <p><a class="action-primary" href="<?= $escaper->escapeUrl($block->getConnectUrl()) ?>"><?= $escaper->escapeHtml(__('Connect to Shipink')) ?></a></p>
+        <?php if ($block->canConnect()): ?>
+            <p><a class="action-primary" href="<?= $escaper->escapeUrl($block->getConnectUrl()) ?>">
+                <?= $escaper->escapeHtml(__('Connect to Shipink')) ?></a></p>
+        <?php endif; ?>
     <?php endif; ?>
 </div>

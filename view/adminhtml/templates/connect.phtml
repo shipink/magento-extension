@@ -9,7 +9,11 @@ $label = $block->getData('state_payload')->label($state);
     <input type="hidden" name="state" value="<?= $escaper->escapeHtmlAttr($state) ?>"/>
     <input type="hidden" name="callback_url" value="<?= $escaper->escapeHtmlAttr((string)$block->getData('callback_url')) ?>"/>
     <input type="hidden" name="return_url" value="<?= $escaper->escapeHtmlAttr((string)$block->getData('return_url')) ?>"/>
-    <p><?= $escaper->escapeHtml(__('Connect this store to the Shipink account "%1"? Shipink will be able to read orders and create shipments.', $label !== '' ? $label : __('(unknown)'))) ?></p>
+    <p><?= $escaper->escapeHtml(__(
+        'Connect this store (%1) to the Shipink account "%2"? Shipink will be able to read orders and create shipments.',
+        (string)$block->getData('store_url'),
+        $label !== '' ? $label : __('(unknown)')
+    )) ?></p>
     <button type="submit" class="action-primary"><?= $escaper->escapeHtml(__('Connect')) ?></button>
     <a class="action-secondary" href="<?= $escaper->escapeUrl($block->getUrl('shipink/dashboard/index')) ?>"><?= $escaper->escapeHtml(__('Cancel')) ?></a>
 </form>

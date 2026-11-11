@@ -64,6 +64,8 @@ class Confirm extends Action implements HttpPostActionInterface
         if ($reply['status'] !== 200 || empty($body['webhook_url']) || empty($body['sales_channel_account_id'])) {
             // Status only: the request carried credentials and the reply body is untrusted.
             $this->logger->error('Shipink connect failed', ['status' => $reply['status']]);
+            // activate() already rotated the token Shipink held, so the old connection is dead.
+            $this->config->clear();
             return $redirect->setUrl($return . (str_contains($return, '?') ? '&' : '?') . 'success=0');
         }
 

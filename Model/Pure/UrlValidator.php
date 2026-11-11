@@ -13,6 +13,9 @@ class UrlValidator
         if (!is_array($parts) || ($parts['scheme'] ?? '') !== 'https' || isset($parts['user']) || isset($parts['pass'])) {
             return false;
         }
+        if (isset($parts['fragment']) || (isset($parts['port']) && (int)$parts['port'] !== 443)) {
+            return false;
+        }
         return in_array(strtolower($parts['host'] ?? ''), self::ALLOWED_HOSTS, true);
     }
 }

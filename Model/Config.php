@@ -42,6 +42,15 @@ class Config
         return $this->getAccountId() !== '' && $this->getWebhookUrl() !== '';
     }
 
+    public function clear(): void
+    {
+        $this->writer->delete(self::ACCOUNT_ID);
+        $this->writer->delete(self::WEBHOOK_URL);
+        $this->writer->delete(self::CONNECTED_AT);
+        $this->cacheTypeList->cleanType('config');
+        $this->scopeConfig->reinit();
+    }
+
     public function save(string $accountId, string $webhookUrl): void
     {
         $this->writer->save(self::ACCOUNT_ID, $accountId);
