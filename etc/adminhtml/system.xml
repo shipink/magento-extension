@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="shipink" translate="label" showInDefault="0" showInWebsite="0" showInStore="0">
+            <label>Shipink</label>
+            <resource>Shipink_Shipink::shipink</resource>
+            <group id="general" translate="label" showInDefault="0" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="app_host" translate="label" type="text" showInDefault="0" showInWebsite="0" showInStore="0">
+                    <label>App Host</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
