@@ -61,7 +61,9 @@ Zip / `app/code` installs: add `--non-composer`.
 
 Uninstalling removes the module's settings and revokes Shipink's API access (it deletes the "Shipink" integration and its OAuth tokens).
 
-Disabling the module (`module:disable`) does NOT revoke access: the integration and its token stay active and Shipink can still read orders and create shipments. To cut access without uninstalling, delete the "Shipink" integration under System → Extensions → Integrations.
+Disabling the module (`module:disable`) does NOT revoke access: the integration and its token stay active and Shipink can still read orders and create shipments. Magento does not let you delete an extension's own integration under System → Extensions → Integrations, so uninstalling (above) is the way to revoke access; you can also remove the store from your Shipink sales channels so Shipink stops using it.
+
+Note: each time Sales → Shipink is opened it issues a new one-time connect link, so finish a connection in the same tab you started it from.
 
 ## For maintainers
 
