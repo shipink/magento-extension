@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_save_before">
+        <observer name="shipink_order_save_before" instance="Shipink\Shipink\Observer\OrderSaveBefore"/>
+    </event>
+    <event name="sales_order_save_commit_after">
+        <observer name="shipink_order_save_commit_after" instance="Shipink\Shipink\Observer\OrderSaveCommitAfter"/>
+    </event>
+    <event name="checkout_submit_all_after">
+        <observer name="shipink_checkout_submit_all_after" instance="Shipink\Shipink\Observer\CheckoutSubmitAllAfter"/>
+    </event>
+</config>
