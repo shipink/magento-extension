@@ -2,6 +2,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
+        <shipink>
+            <general>
+                <app_host>app.shipink.io</app_host>
+            </general>
+        </shipink>
         <carriers>
             <shipink>
                 <active>0</active>

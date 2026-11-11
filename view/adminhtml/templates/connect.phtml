@@ -1,19 +1,22 @@
 <?php
 /** @var \Magento\Backend\Block\Template $block */
 /** @var \Magento\Framework\Escaper $escaper */
-$state = (string)$block->getData('state');
-$label = $block->getData('state_payload')->label($state);
+$label = (string)$block->getData('label');
 ?>
 <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('shipink/connect/confirm')) ?>">
-    <?= $block->getBlockHtml('formkey') ?>
-    <input type="hidden" name="state" value="<?= $escaper->escapeHtmlAttr($state) ?>"/>
-    <input type="hidden" name="callback_url" value="<?= $escaper->escapeHtmlAttr((string)$block->getData('callback_url')) ?>"/>
-    <input type="hidden" name="return_url" value="<?= $escaper->escapeHtmlAttr((string)$block->getData('return_url')) ?>"/>
+    <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+    <input type="hidden" name="state" value="<?= $escaper->escapeHtmlAttr((string)$block->getData('state')) ?>"/>
+    <input type="hidden" name="callback_url"
+           value="<?= $escaper->escapeHtmlAttr((string)$block->getData('callback_url')) ?>"/>
+    <input type="hidden" name="return_url"
+           value="<?= $escaper->escapeHtmlAttr((string)$block->getData('return_url')) ?>"/>
+    <input type="hidden" name="nonce" value="<?= $escaper->escapeHtmlAttr((string)$block->getData('nonce')) ?>"/>
     <p><?= $escaper->escapeHtml(__(
         'Connect this store (%1) to the Shipink account "%2"? Shipink will be able to read orders and create shipments.',
         (string)$block->getData('store_url'),
-        $label !== '' ? $label : __('(unknown)')
+        $label
     )) ?></p>
     <button type="submit" class="action-primary"><?= $escaper->escapeHtml(__('Connect')) ?></button>
-    <a class="action-secondary" href="<?= $escaper->escapeUrl($block->getUrl('shipink/dashboard/index')) ?>"><?= $escaper->escapeHtml(__('Cancel')) ?></a>
+    <a class="action-secondary" href="<?= $escaper->escapeUrl($block->getUrl('shipink/dashboard/index')) ?>">
+        <?= $escaper->escapeHtml(__('Cancel')) ?></a>
 </form>

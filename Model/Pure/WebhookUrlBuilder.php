@@ -26,11 +26,12 @@ class WebhookUrlBuilder
     /**
      * Link that opens the given Magento order in the Shipink app.
      *
-     * @param int $orderId Magento order id.
+     * @param int    $orderId Magento order id.
+     * @param string $appHost Shipink app host, e.g. app.shipink.io.
      */
-    public function openInShipink(int $orderId): string
+    public function openInShipink(int $orderId, string $appHost): string
     {
-        return 'https://app.shipink.io/orders?' . http_build_query([
+        return 'https://' . $appHost . '/orders?' . http_build_query([
             'sales_channel_id' => 'magento',
             'sales_channel_order_id' => $orderId,
             'action' => 'open',

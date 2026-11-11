@@ -20,7 +20,11 @@ class WebhookUrlBuilderTest extends TestCase
     {
         $this->assertSame(
             'https://app.shipink.io/orders?sales_channel_id=magento&sales_channel_order_id=42&action=open',
-            (new WebhookUrlBuilder())->openInShipink(42)
+            (new WebhookUrlBuilder())->openInShipink(42, 'app.shipink.io')
+        );
+        $this->assertSame(
+            'https://app.dev.shipink.io/orders?sales_channel_id=magento&sales_channel_order_id=7&action=open',
+            (new WebhookUrlBuilder())->openInShipink(7, 'app.dev.shipink.io')
         );
     }
 }

@@ -22,7 +22,7 @@ class OrderViewButton
         if (!$this->config->isConnected() || !$subject->getOrderId()) {
             return;
         }
-        $url = $this->urls->openInShipink((int)$subject->getOrderId());
+        $url = $this->urls->openInShipink((int)$subject->getOrderId(), $this->config->getAppHost());
         $subject->addButton('shipink_open', [
             'label' => __('Open in Shipink'),
             'class' => 'shipink-open',

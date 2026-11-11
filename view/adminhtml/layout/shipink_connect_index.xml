@@ -4,11 +4,7 @@
     <body>
         <referenceContainer name="content">
             <block class="Magento\Backend\Block\Template" name="shipink.connect"
-                   template="Shipink_Shipink::connect.phtml">
-                <arguments>
-                    <argument name="state_payload" xsi:type="object">Shipink\Shipink\Model\Pure\StatePayload</argument>
-                </arguments>
-            </block>
+                   template="Shipink_Shipink::connect.phtml"/>
         </referenceContainer>
     </body>
 </page>
