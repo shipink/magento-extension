@@ -1,0 +1,16 @@
+name: Release zip
+on:
+  push:
+    tags: ["*"]
+permissions:
+  contents: write
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: git archive -o shipink-magento.zip HEAD -- . ':!.github' ':!tests' ':!bin'
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: gh release create "$TAG" shipink-magento.zip --title "$TAG" --generate-notes
