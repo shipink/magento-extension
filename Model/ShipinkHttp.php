@@ -21,6 +21,7 @@ class ShipinkHttp
     {
         $curl = $this->curlFactory->create();
         $curl->setTimeout($timeout);
+        $curl->setOption(CURLOPT_CONNECTTIMEOUT, 1);
         $curl->addHeader('Content-Type', 'application/json');
         $curl->addHeader('Accept', 'application/json');
         try {

@@ -10,9 +10,7 @@ class OrderEventBuffer
 
     public function remember(int $orderId, ?string $state, ?string $status): void
     {
-        if (!isset($this->before[$orderId])) {
-            $this->before[$orderId] = ['state' => $state, 'status' => $status];
-        }
+        $this->before[$orderId] = ['state' => $state, 'status' => $status];
     }
 
     /** @return array{state: ?string, status: ?string}|null */
