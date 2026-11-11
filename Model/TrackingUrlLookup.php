@@ -21,6 +21,7 @@ class TrackingUrlLookup
         $track = $this->trackCollectionFactory->create()
             ->addFieldToFilter('track_number', $trackNumber)
             ->addFieldToFilter('carrier_code', 'shipink')
+            ->setOrder('entity_id', 'DESC')
             ->setPageSize(1)
             ->getFirstItem();
         if (!$track->getId()) {
