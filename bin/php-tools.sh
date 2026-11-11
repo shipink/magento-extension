@@ -5,9 +5,15 @@
 # Usage:
 #   bin/php-tools.sh phpunit [phpunit args...]   e.g. bin/php-tools.sh phpunit --filter UrlValidatorTest
 #   bin/php-tools.sh phpcs   [phpcs args...]
+#
+# Needs SHIPINK_TEST_HOST (user@host) and SHIPINK_TEST_KEY (ssh key path) in the environment.
 set -euo pipefail
-KEY=${SHIPINK_TEST_KEY:?set SHIPINK_TEST_KEY to the ssh key path}
-HOST=${SHIPINK_TEST_HOST:?set SHIPINK_TEST_HOST to user@host}
+if [ -z "${SHIPINK_TEST_HOST:-}" ] || [ -z "${SHIPINK_TEST_KEY:-}" ]; then
+  echo 'usage: SHIPINK_TEST_HOST=user@host SHIPINK_TEST_KEY=/path/to/ssh.key bin/php-tools.sh phpunit|phpcs [args...]' >&2
+  exit 2
+fi
+KEY=$SHIPINK_TEST_KEY
+HOST=$SHIPINK_TEST_HOST
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 tool=${1:?usage: bin/php-tools.sh phpunit|phpcs [args...]}; shift
 args=$(printf '%q ' "$@")

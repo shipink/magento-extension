@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
-# Copies the module to the Magento test store and rebuilds. Usage: bin/deploy-test.sh
+# Copies the module to the Magento test store and rebuilds.
+# Usage: SHIPINK_TEST_HOST=user@host SHIPINK_TEST_KEY=/path/to/ssh.key bin/deploy-test.sh
 set -euo pipefail
-KEY=${SHIPINK_TEST_KEY:?set SHIPINK_TEST_KEY to the ssh key path}
-HOST=${SHIPINK_TEST_HOST:?set SHIPINK_TEST_HOST to user@host}
-tar --exclude=.git --exclude=tests/vendor -czf /tmp/shipink-magento.tgz -C "$(dirname "$0")/.." .
+if [ -z "${SHIPINK_TEST_HOST:-}" ] || [ -z "${SHIPINK_TEST_KEY:-}" ]; then
+  echo 'usage: SHIPINK_TEST_HOST=user@host SHIPINK_TEST_KEY=/path/to/ssh.key bin/deploy-test.sh' >&2
+  exit 2
+fi
+KEY=$SHIPINK_TEST_KEY
+HOST=$SHIPINK_TEST_HOST
+tar --exclude=.git --exclude=tests/vendor --exclude=.superpowers -czf /tmp/shipink-magento.tgz -C "$(dirname "$0")/.." .
 scp -q -i "$KEY" /tmp/shipink-magento.tgz "$HOST":/tmp/
 ssh -i "$KEY" "$HOST" 'set -e
 D=/var/www/magento/app/code/Shipink/Shipink

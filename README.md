@@ -53,4 +53,4 @@ Disabling the module does not remove its settings.
 
 ## For maintainers
 
-Do not change the API resources in `etc/integration.xml` in a release without telling merchants to reconnect: `setup:upgrade` recreates the integration when its resources change, which invalidates the token Shipink holds. Dev checks: `bin/php-tools.sh phpunit`, `bin/php-tools.sh phpcs`, `bin/deploy-test.sh`.
+Do not change the API resources in `etc/integration.xml` in a release without telling merchants to reconnect: `setup:upgrade` recreates the integration when its resources change, which invalidates the token Shipink holds. Dev checks: `bin/php-tools.sh phpunit`, `bin/php-tools.sh phpcs`, `bin/deploy-test.sh`. They run on a test server and need `SHIPINK_TEST_HOST` (`user@host`) and `SHIPINK_TEST_KEY` (path to the SSH key) in the environment.
