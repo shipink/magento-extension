@@ -21,8 +21,9 @@ class StatePayload
     }
 
     /**
-     * Returns the 'exp' field (unix seconds), or null when missing. Unsigned:
-     * only used to skip obviously stale requests before touching the integration.
+     * Returns the 'exp' field (unix seconds), or null when missing.
+     *
+     * Unsigned: only used to skip obviously stale requests before touching the integration.
      *
      * @param string $state Signed state string, base64url(json).signature.
      */
@@ -41,6 +42,7 @@ class StatePayload
     private function decode(string $state): array
     {
         $part = explode('.', $state)[0];
+        // phpcs:ignore Magento2.Functions.DiscouragedFunction -- pure class, no Magento dependency
         $json = base64_decode(strtr($part, '-_', '+/'), true);
         if ($json === false) {
             return [];

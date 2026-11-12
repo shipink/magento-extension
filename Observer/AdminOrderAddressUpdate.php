@@ -16,6 +16,11 @@ use Shipink\Shipink\Model\WebhookSender;
  */
 class AdminOrderAddressUpdate implements ObserverInterface
 {
+    /**
+     * @param OrderRepositoryInterface $orderRepository
+     * @param WebhookSender $sender
+     * @param LoggerInterface $logger
+     */
     public function __construct(
         private readonly OrderRepositoryInterface $orderRepository,
         private readonly WebhookSender $sender,
@@ -23,6 +28,9 @@ class AdminOrderAddressUpdate implements ObserverInterface
     ) {
     }
 
+    /**
+     * @inheritdoc
+     */
     public function execute(Observer $observer): void
     {
         try {

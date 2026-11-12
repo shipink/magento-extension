@@ -9,10 +9,16 @@ use Shipink\Shipink\Model\WebhookSender;
 
 class CheckoutSubmitAllAfter implements ObserverInterface
 {
+    /**
+     * @param WebhookSender $sender
+     */
     public function __construct(private readonly WebhookSender $sender)
     {
     }
 
+    /**
+     * @inheritdoc
+     */
     public function execute(Observer $observer): void
     {
         $event = $observer->getEvent();

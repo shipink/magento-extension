@@ -17,12 +17,19 @@ use Shipink\Shipink\Model\IntegrationActivator;
  */
 class Uninstall implements UninstallInterface
 {
+    /**
+     * @param IntegrationServiceInterface $integrationService
+     * @param OauthServiceInterface $oauthService
+     */
     public function __construct(
         private readonly IntegrationServiceInterface $integrationService,
         private readonly OauthServiceInterface $oauthService
     ) {
     }
 
+    /**
+     * @inheritdoc
+     */
     public function uninstall(SchemaSetupInterface $setup, ModuleContextInterface $context): void
     {
         $setup->startSetup();

@@ -26,6 +26,15 @@ class Index extends Action implements HttpGetActionInterface
     /** @var string[] */
     protected $_publicActions = ['index'];
 
+    /**
+     * @param Action\Context $context
+     * @param PageFactory $pageFactory
+     * @param UrlValidator $urlValidator
+     * @param StoreManagerInterface $storeManager
+     * @param Config $config
+     * @param ConnectNonce $connectNonce
+     * @param StatePayload $statePayload
+     */
     public function __construct(
         Action\Context $context,
         private readonly PageFactory $pageFactory,
@@ -38,6 +47,11 @@ class Index extends Action implements HttpGetActionInterface
         parent::__construct($context);
     }
 
+    /**
+     * Validates the connect request and shows the confirmation form.
+     *
+     * @return \Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         $req = $this->getRequest();

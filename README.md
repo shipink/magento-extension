@@ -49,6 +49,21 @@ The module creates a Magento integration named "Shipink". Its API access is limi
 - Editing an order's address in the admin notifies Shipink.
 - Reconnecting replaces the API token Shipink uses.
 
+## Data and privacy
+
+The module only talks to Shipink (`*.shipink.io`) and only after an admin connects the store.
+
+- When you connect, it sends Shipink the integration's OAuth credentials, the store URL and the Magento version.
+- When an order is placed, updated or canceled, it sends Shipink the order's ID and number. Nothing else is in that request.
+- Shipink then reads the order through the Magento API with the permissions listed above: customer name, email, phone, shipping and billing addresses, items, totals and payment method. It uses them to create shipments and labels.
+- Nothing is sent while the store is not connected.
+
+Shipink's privacy policy: https://shipink.io/privacy/
+
+## Support
+
+info@shipink.io
+
 ## Uninstall
 
 Composer installs:

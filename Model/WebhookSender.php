@@ -14,6 +14,12 @@ class WebhookSender
     /** @var int|null Unix time Shipink was last found unreachable. */
     private ?int $trippedAt = null;
 
+    /**
+     * @param Config $config
+     * @param ShipinkHttp $http
+     * @param WebhookUrlBuilder $urls
+     * @param LoggerInterface $logger
+     */
     public function __construct(
         private readonly Config $config,
         private readonly ShipinkHttp $http,
@@ -22,6 +28,14 @@ class WebhookSender
     ) {
     }
 
+    /**
+     * Posts an order event to Shipink; failures are logged, never thrown.
+     *
+     * @param string $event Event name, e.g. order-placed.
+     * @param int $entityId Order entity id.
+     * @param string $incrementId Order increment id.
+     * @return void
+     */
     public function send(string $event, int $entityId, string $incrementId): void
     {
         if (!$this->config->isConnected()) {

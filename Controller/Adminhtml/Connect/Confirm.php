@@ -28,6 +28,18 @@ class Confirm extends Action implements HttpPostActionInterface
     public const ERROR_CALLBACK_REJECTED = 'callback_rejected';
     public const ERROR_INVALID_WEBHOOK_URL = 'invalid_webhook_url';
 
+    /**
+     * @param Action\Context $context
+     * @param UrlValidator $urlValidator
+     * @param IntegrationActivator $activator
+     * @param ShipinkHttp $http
+     * @param Config $config
+     * @param StoreManagerInterface $storeManager
+     * @param ProductMetadataInterface $productMetadata
+     * @param LoggerInterface $logger
+     * @param ConnectNonce $connectNonce
+     * @param StatePayload $statePayload
+     */
     public function __construct(
         Action\Context $context,
         private readonly UrlValidator $urlValidator,
@@ -43,6 +55,11 @@ class Confirm extends Action implements HttpPostActionInterface
         parent::__construct($context);
     }
 
+    /**
+     * Completes the connect: activates the integration, hands the credentials to Shipink and redirects.
+     *
+     * @return \Magento\Framework\Controller\ResultInterface
+     */
     public function execute()
     {
         $req = $this->getRequest();

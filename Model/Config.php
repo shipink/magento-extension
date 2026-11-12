@@ -18,6 +18,13 @@ class Config
     public const APP_HOST = 'shipink/general/app_host';
     public const DEFAULT_APP_HOST = 'app.shipink.io';
 
+    /**
+     * @param ReinitableConfigInterface $scopeConfig
+     * @param WriterInterface $writer
+     * @param TypeListInterface $cacheTypeList
+     * @param DateTime $dateTime
+     * @param UrlValidator $urlValidator
+     */
     public function __construct(
         private readonly ReinitableConfigInterface $scopeConfig,
         private readonly WriterInterface $writer,
@@ -27,16 +34,31 @@ class Config
     ) {
     }
 
+    /**
+     * Shipink sales channel account id saved at connect time.
+     *
+     * @return string
+     */
     public function getAccountId(): string
     {
         return (string)$this->scopeConfig->getValue(self::ACCOUNT_ID);
     }
 
+    /**
+     * Shipink webhook base URL saved at connect time.
+     *
+     * @return string
+     */
     public function getWebhookUrl(): string
     {
         return (string)$this->scopeConfig->getValue(self::WEBHOOK_URL);
     }
 
+    /**
+     * GMT date the store was connected.
+     *
+     * @return string
+     */
     public function getConnectedAt(): string
     {
         return (string)$this->scopeConfig->getValue(self::CONNECTED_AT);
@@ -51,11 +73,21 @@ class Config
         return $host !== '' ? $host : self::DEFAULT_APP_HOST;
     }
 
+    /**
+     * True when both the account id and the webhook URL are saved.
+     *
+     * @return bool
+     */
     public function isConnected(): bool
     {
         return $this->getAccountId() !== '' && $this->getWebhookUrl() !== '';
     }
 
+    /**
+     * Deletes the saved connection settings.
+     *
+     * @return void
+     */
     public function clear(): void
     {
         $this->writer->delete(self::ACCOUNT_ID);
@@ -66,8 +98,9 @@ class Config
     }
 
     /**
-     * Saves the connection. Returns false (and saves nothing) when the webhook
-     * URL is not an https URL on a *.shipink.io host.
+     * Saves the connection.
+     *
+     * Returns false (and saves nothing) when the webhook URL is not an https URL on a *.shipink.io host.
      *
      * @param string $accountId  Shipink sales channel account id.
      * @param string $webhookUrl Shipink webhook base URL.

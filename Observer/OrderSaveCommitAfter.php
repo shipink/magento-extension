@@ -11,6 +11,11 @@ use Shipink\Shipink\Model\WebhookSender;
 
 class OrderSaveCommitAfter implements ObserverInterface
 {
+    /**
+     * @param OrderEventBuffer $buffer
+     * @param OrderEventDecider $decider
+     * @param WebhookSender $sender
+     */
     public function __construct(
         private readonly OrderEventBuffer $buffer,
         private readonly OrderEventDecider $decider,
@@ -18,6 +23,9 @@ class OrderSaveCommitAfter implements ObserverInterface
     ) {
     }
 
+    /**
+     * @inheritdoc
+     */
     public function execute(Observer $observer): void
     {
         /** @var \Magento\Sales\Model\Order $order */

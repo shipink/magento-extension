@@ -25,6 +25,14 @@ class Shipink extends AbstractCarrier implements CarrierInterface
     /** @var bool */
     protected $_isFixed = true;
 
+    /**
+     * @param ScopeConfigInterface $scopeConfig
+     * @param ErrorFactory $rateErrorFactory
+     * @param LoggerInterface $logger
+     * @param StatusFactory $trackStatusFactory
+     * @param TrackingUrlLookup $trackingUrlLookup
+     * @param array $data
+     */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         ErrorFactory $rateErrorFactory,
@@ -36,21 +44,43 @@ class Shipink extends AbstractCarrier implements CarrierInterface
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
     }
 
+    /**
+     * Returns no rates; this carrier is tracking-only.
+     *
+     * @param RateRequest $request
+     * @return bool
+     */
     public function collectRates(RateRequest $request)
     {
         return false;
     }
 
+    /**
+     * Returns the single method this carrier declares.
+     *
+     * @return array
+     */
     public function getAllowedMethods(): array
     {
         return ['shipink' => 'Shipink'];
     }
 
+    /**
+     * Tracking is always available for this carrier.
+     *
+     * @return bool
+     */
     public function isTrackingAvailable(): bool
     {
         return true;
     }
 
+    /**
+     * Builds the tracking status, linking to the Shipink tracking page when a URL is known.
+     *
+     * @param string $tracking Tracking number.
+     * @return \Magento\Shipping\Model\Tracking\Result\Status
+     */
     public function getTrackingInfo($tracking)
     {
         $status = $this->trackStatusFactory->create();

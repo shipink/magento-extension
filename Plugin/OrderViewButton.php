@@ -10,6 +10,11 @@ use Shipink\Shipink\Model\Pure\WebhookUrlBuilder;
 
 class OrderViewButton
 {
+    /**
+     * @param Config $config
+     * @param WebhookUrlBuilder $urls
+     * @param Escaper $escaper
+     */
     public function __construct(
         private readonly Config $config,
         private readonly WebhookUrlBuilder $urls,
@@ -17,6 +22,12 @@ class OrderViewButton
     ) {
     }
 
+    /**
+     * Adds an "Open in Shipink" button to the order view when the store is connected.
+     *
+     * @param View $subject
+     * @return void
+     */
     public function beforeSetLayout(View $subject): void
     {
         if (!$this->config->isConnected() || !$subject->getOrderId()) {

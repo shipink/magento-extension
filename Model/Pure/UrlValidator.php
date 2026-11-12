@@ -80,6 +80,7 @@ class UrlValidator
      */
     private function baseParts(string $url): ?array
     {
+        // phpcs:ignore Magento2.Functions.DiscouragedFunction -- pure class, no Magento dependency
         $parts = parse_url($url);
         if (!is_array($parts) || ($parts['scheme'] ?? '') !== 'https'
             || isset($parts['user']) || isset($parts['pass'])) {

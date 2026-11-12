@@ -1,7 +1,11 @@
 <?php
 /** @var \Magento\Backend\Block\Template $block */
 /** @var \Magento\Framework\Escaper $escaper */
-$label = (string)$block->getData('label');
+$confirmText = __(
+    'Connect this store (%1) to the Shipink account "%2"? Shipink will be able to read orders and create shipments.',
+    (string)$block->getData('store_url'),
+    (string)$block->getData('label')
+);
 ?>
 <form method="post" action="<?= $escaper->escapeUrl($block->getUrl('shipink/connect/confirm')) ?>">
     <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
@@ -11,11 +15,7 @@ $label = (string)$block->getData('label');
     <input type="hidden" name="return_url"
            value="<?= $escaper->escapeHtmlAttr((string)$block->getData('return_url')) ?>"/>
     <input type="hidden" name="nonce" value="<?= $escaper->escapeHtmlAttr((string)$block->getData('nonce')) ?>"/>
-    <p><?= $escaper->escapeHtml(__(
-        'Connect this store (%1) to the Shipink account "%2"? Shipink will be able to read orders and create shipments.',
-        (string)$block->getData('store_url'),
-        $label
-    )) ?></p>
+    <p><?= $escaper->escapeHtml($confirmText) ?></p>
     <button type="submit" class="action-primary"><?= $escaper->escapeHtml(__('Connect')) ?></button>
     <a class="action-secondary" href="<?= $escaper->escapeUrl($block->getUrl('shipink/dashboard/index')) ?>">
         <?= $escaper->escapeHtml(__('Cancel')) ?></a>

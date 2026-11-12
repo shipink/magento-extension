@@ -8,6 +8,10 @@ use Magento\Framework\Serialize\Serializer\Json;
 
 class ShipinkHttp
 {
+    /**
+     * @param CurlFactory $curlFactory
+     * @param Json $json
+     */
     public function __construct(
         private readonly CurlFactory $curlFactory,
         private readonly Json $json
@@ -15,6 +19,11 @@ class ShipinkHttp
     }
 
     /**
+     * Posts a JSON body; status 0 means the request could not be made.
+     *
+     * @param string $url
+     * @param array $body
+     * @param int $timeout Seconds.
      * @return array{status: int, body: array|null}
      */
     public function postJson(string $url, array $body, int $timeout): array

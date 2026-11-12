@@ -14,6 +14,10 @@ class ConnectNonce
 {
     private const KEY = 'shipink_connect_nonce';
 
+    /**
+     * @param Session $session
+     * @param NonceCheck $check
+     */
     public function __construct(
         private readonly Session $session,
         private readonly NonceCheck $check

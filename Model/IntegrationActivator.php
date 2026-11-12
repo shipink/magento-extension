@@ -19,6 +19,11 @@ class IntegrationActivator
     /** Integration name as declared in etc/integration.xml. */
     public const NAME = 'Shipink';
 
+    /**
+     * @param IntegrationServiceInterface $integrationService
+     * @param OauthServiceInterface $oauthService
+     * @param IntegrationResource $integrationResource
+     */
     public function __construct(
         private readonly IntegrationServiceInterface $integrationService,
         private readonly OauthServiceInterface $oauthService,

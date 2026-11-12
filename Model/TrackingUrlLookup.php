@@ -9,6 +9,11 @@ use Shipink\Shipink\Model\Pure\TrackingUrlExtractor;
 
 class TrackingUrlLookup
 {
+    /**
+     * @param TrackCollectionFactory $trackCollectionFactory
+     * @param CommentCollectionFactory $commentCollectionFactory
+     * @param TrackingUrlExtractor $extractor
+     */
     public function __construct(
         private readonly TrackCollectionFactory $trackCollectionFactory,
         private readonly CommentCollectionFactory $commentCollectionFactory,
@@ -16,6 +21,12 @@ class TrackingUrlLookup
     ) {
     }
 
+    /**
+     * Finds the Shipink tracking URL in the comments of the shipment holding this track number.
+     *
+     * @param string $trackNumber
+     * @return string|null
+     */
     public function find(string $trackNumber): ?string
     {
         $track = $this->trackCollectionFactory->create()

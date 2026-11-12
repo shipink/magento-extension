@@ -18,6 +18,15 @@ class Dashboard extends Template
     /** @var string|null Nonce issued for this render. */
     private ?string $nonce = null;
 
+    /**
+     * @param Template\Context $context
+     * @param Config $config
+     * @param StoreManagerInterface $storeManager
+     * @param FrontNameResolver $frontNameResolver
+     * @param IntegrationServiceInterface $integrationService
+     * @param ConnectNonce $connectNonce
+     * @param array $data
+     */
     public function __construct(
         Template\Context $context,
         private readonly Config $config,
@@ -31,8 +40,9 @@ class Dashboard extends Template
     }
 
     /**
-     * Connected only when the module has its Shipink settings and the Shipink
-     * integration (API access) is still active.
+     * Connected only when the module has its Shipink settings and the integration is active.
+     *
+     * The integration is the Shipink one (API access).
      */
     public function isConnected(): bool
     {
@@ -43,11 +53,21 @@ class Dashboard extends Template
         return $integration->getId() && (int)$integration->getStatus() === Integration::STATUS_ACTIVE;
     }
 
+    /**
+     * GMT date the store was connected.
+     *
+     * @return string
+     */
     public function getConnectedAt(): string
     {
         return $this->config->getConnectedAt();
     }
 
+    /**
+     * True when the admin user may start or redo the connect flow.
+     *
+     * @return bool
+     */
     public function canConnect(): bool
     {
         return (bool)$this->_authorization->isAllowed('Shipink_Shipink::connect');
@@ -70,6 +90,11 @@ class Dashboard extends Template
         ], '', '&', PHP_QUERY_RFC3986);
     }
 
+    /**
+     * Link to the Magento orders view in the Shipink app.
+     *
+     * @return string
+     */
     public function getDashboardUrl(): string
     {
         return 'https://' . $this->config->getAppHost() . '/orders?sales_channel_id=magento';
