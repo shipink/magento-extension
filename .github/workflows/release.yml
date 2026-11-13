@@ -2,24 +2,40 @@ name: Release zip
 on:
   push:
     tags: ["*"]
+  # Re-attach the zip to an existing tag's release (Actions → Release zip → Run workflow).
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag, e.g. 1.0.0"
+        required: true
 permissions:
   contents: write
 jobs:
   zip:
     runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.TAG }}
       - name: Tag must match composer.json version
-        env:
-          TAG: ${{ github.ref_name }}
         run: |
           version=$(jq -r .version composer.json)
           if [ "${TAG#v}" != "$version" ]; then
             echo "tag $TAG does not match composer.json version $version" >&2
             exit 1
           fi
+      # Files sit at the zip root so it unpacks straight into app/code/Shipink/Shipink.
       - run: git archive -o shipink-magento.zip HEAD -- . ':!.github' ':!tests' ':!bin'
+      # The release may already exist (created from the GitHub UI): upload to it
+      # instead of failing on create.
       - env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
-        run: gh release create "$TAG" shipink-magento.zip --title "$TAG" --generate-notes
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" shipink-magento.zip --clobber
+          else
+            gh release create "$TAG" shipink-magento.zip --title "$TAG" --generate-notes
+          fi
